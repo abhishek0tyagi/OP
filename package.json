@@ -20,6 +20,8 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-form-data": "^2.0.22",
-    "moongose": "^1.0.0"
+    "http": "^0.0.1-security",
+    "moongose": "^1.0.0",
+    "node-fetch": "^2.6.6"
   }
 }
