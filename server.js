@@ -1,10 +1,4 @@
-// Keep this at the top of the first file loaded in your app
-// require('dotenv').config();
-
-// till here
-
 const express = require('express');
-
 const app = express();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -29,13 +23,13 @@ mongoOptions = {
     useUnifiedTopology: true,
 };
 
-// mongoose.connect(process.env.MONGOURL, mongoOptions).then(() => {
-//     console.log('mongoDb connected!');
-//     app.emit('mongoConnected');
-// })
-//     .catch((err) => {
-//         console.log('Mongo Error', err);
-//     });
+mongoose.connect('mongodb+srv://op24lark:2424lark@cluster0.mldekxu.mongodb.net/', mongoOptions).then(() => {
+    console.log('mongoDb connected!');
+    app.emit('mongoConnected');
+})
+    .catch((err) => {
+        console.log('Mongo Error', err);
+    });
 
 // app.get('/load-test', (req, res) => {
 //     res.send({ message: 'Loaded' });
@@ -60,5 +54,5 @@ app.use((err, req, res, next) => {
 
 // Listen on `port` and 0.0.0.0
 app.listen(PORT, "0.0.0.0", function () {
-    console.log(`Server is running on port ${Port}`)
+    console.log(`Server is running on port ${PORT}`)
 });
