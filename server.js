@@ -58,5 +58,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-
-app.listen(Port, console.log(`Server is running on port ${Port}`));
+// Listen on `port` and 0.0.0.0
+app.listen(Port, "0.0.0.0", function () {
+    console.log(`Server is running on port ${Port}`)
+});
