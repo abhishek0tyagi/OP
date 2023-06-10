@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const http = require('https');
+const users = require('../models/userSchema')
 
 const register =async function(req,res)
 {
@@ -30,4 +31,31 @@ const register =async function(req,res)
 
 // }
 
-module.exports={register}
+const userCompeleteProfile = async function(req, res) {
+    try{
+    const {
+        fullName,
+        email,
+        dateofBirth,
+        birthTime,
+        city,
+        state
+    }= req.body
+    await users.create({fullName,email, dateofBirth, birthTime, city, state});
+    res.send({
+       status:true,
+       message:"Filled Successfully"
+    })
+}catch{
+    res.send({
+        message:'somting went wrong',
+        status: false
+    })
+}
+}
+
+
+
+
+
+module.exports={register,userCompeleteProfile}

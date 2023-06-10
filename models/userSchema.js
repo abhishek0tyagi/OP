@@ -15,6 +15,9 @@ const userSchema = new schema({
     dateOfBirth:{
         type:Number
     },
+    timeofBirth:{
+        type:String
+    },
     city:{
         type:String
     },
