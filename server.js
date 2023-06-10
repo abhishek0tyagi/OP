@@ -23,7 +23,7 @@ mongoOptions = {
     useUnifiedTopology: true,
 };
 
-mongoose.connect('mongodb+srv://op24lark:2424lark@cluster0.mldekxu.mongodb.net/', mongoOptions).then(() => {
+mongoose.connect('mongodb+srv://op24lark:2424lark@cluster0.mldekxu.mongodb.net/OP', mongoOptions).then(() => {
     console.log('mongoDb connected!');
     app.emit('mongoConnected');
 })
