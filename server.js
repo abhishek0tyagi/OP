@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 // const config = require('config');
 
-const Port = 8001;
+const Port = 8002;
 const cors = require('cors');
 const formData = require('express-form-data');
 

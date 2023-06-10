@@ -3,6 +3,7 @@ const http = require('https');
 
 const register =async function(req,res)
 {
+    console.log("hello")
     // let mobile = '917310042077';
     // let template_idMsg='647f75b1d6fc052fda462523';
     // let authkeyMsg91='398284AQ1EfNFW647f7502P1';
