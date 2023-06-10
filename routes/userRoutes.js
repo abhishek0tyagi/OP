@@ -5,6 +5,7 @@ const router = express.Router();
 // const { rateLimiter5, rateLimiter100 } = require('../middleware/rate-limiter');
 const userController = require('../controllers/userController')
 
-router.get('/register', userController.register);
+router.get('/register/:phone', userController.register);
+router.post('/verifyPhoneOtp', userController.verifyPhoneOtp);
 
 module.exports = router;

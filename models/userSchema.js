@@ -3,31 +3,35 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
-    fullName:{
-        type:String
+    fullName: {
+        type: String
     },
-    phone:{
-        type:Number
+    phone: {
+        type: String,
+        unique: true,
     },
-    email:{
-        type:String
+    email: {
+        type: String,
+        unique: true,
     },
-    dateOfBirth:{
-        type:Number
+    dateofBirth: {
+        type: String
     },
-    timeofBirth:{
-        type:String
+    city: {
+        type: String
+    },
+    state: {
+        type: String
     },
     city:{
         type:String
     },
-    state:{
-        type:{
-            String
-        }
+    isBlocked:{
+        type:Boolean,
+        default:false
     }
 
-},{ timestamps: true })
+}, { timestamps: true })
 
 const users = mongoose.model('users', userSchema);
 
