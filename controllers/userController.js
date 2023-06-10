@@ -7,6 +7,7 @@ const appOtp = require('../models/appOtpSchema');
 const register = async (req, res) => {
     try {
         const phone = req.params.phone;
+        console.log(phone)
         if (phone != "1234567890") {
             return res.send({
                 Message: "Incorrect testing number!",
@@ -14,6 +15,7 @@ const register = async (req, res) => {
             })
         }
         const userData = await users.findOne({ phone });
+        console.log(userData)
         if (userData) {
             await appOtp.create({ phone, email: "", otp: "1234", description: "Login OTP!" });
             res.send({
