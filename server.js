@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 // const config = require('config');
 
-const Port = 8002;
+const PORT = 8002;
 const cors = require('cors');
 const formData = require('express-form-data');
 
@@ -59,6 +59,6 @@ app.use((err, req, res, next) => {
 });
 
 // Listen on `port` and 0.0.0.0
-app.listen(Port, "0.0.0.0", function () {
+app.listen(PORT, "0.0.0.0", function () {
     console.log(`Server is running on port ${Port}`)
 });
