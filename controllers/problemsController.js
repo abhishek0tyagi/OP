@@ -32,7 +32,7 @@ const createProblemCategory = async (req, res) => {
 //         })
 //     }
 // }
-const getProblemsCatogary = async (req, res) => {
+const getProblemsCategory = async (req, res) => {
     try {
         const data = await problemsCat.find({ isDeleted: false });
         if (data.length) {
@@ -57,4 +57,4 @@ const getProblemsCatogary = async (req, res) => {
     }
 }
 
-module.exports = { getProblemsCatogary, createProblemCategory }
+module.exports = { getProblemsCategory, createProblemCategory }
