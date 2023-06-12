@@ -14,16 +14,16 @@ const userSchema = new schema({
         type: String,
         unique: true,
     },
-    dateofBirth: {
+    dateofBirth: {             //dd-mm-yyyy
         type: String
+    },
+    time:{
+        type:String
     },
     city: {
         type: String
     },
     state: {
-        type: String
-    },
-    city: {
         type: String
     },
     isBlocked: {
