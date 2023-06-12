@@ -7,7 +7,6 @@ const appOtp = require('../models/appOtpSchema');
 const register = async (req, res) => {
     try {
         const phone = req.params.phone;
-        console.log(phone)
         if (phone != "1234567890") {
             return res.send({
                 Message: "Incorrect testing number!",
@@ -15,7 +14,6 @@ const register = async (req, res) => {
             })
         }
         const userData = await users.findOne({ phone });
-        console.log(userData)
         if (userData) {
             await appOtp.create({ phone, email: "", otp: "1234", description: "Login OTP!" });
             res.send({
@@ -55,28 +53,40 @@ const register = async (req, res) => {
 const verifyPhoneOtp = async (req, res) => {
     try {
         const { phone, otp } = req.body;
+        const userData = await users.findOne({ phone });
+        if (!userData) {
+            return res.send({
+                Message: "User not found!",
+                Status: false,
+                UserId: ""
+            })
+        }
         const userOtp = await appOtp.findOne({ phone });
         if (!userOtp) {
-            res.send({
+            return res.send({
                 Message: "Incorrect number!",
-                Status: false
+                Status: false,
+                UserId: ""
             })
         }
         if (userOtp.otp === otp) {
             res.send({
-                Message: "You are verified successfully!",
-                Status: true
-            });
+                Message: "OTP Verified!",
+                Stauts: true,
+                UserId: userData._id
+            })
         } else {
             res.send({
-                Message: "Incorrect OTP!",
-                Status: false
+                Message: "Incorrect OTP",
+                Status: false,
+                UserId: ""
             })
         }
     } catch (error) {
         res.send({
             Message: "Something went wrong!",
-            Status: false
+            Status: false,
+            UserId: ""
         })
     }
 }
