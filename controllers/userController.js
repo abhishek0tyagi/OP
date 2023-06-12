@@ -58,7 +58,8 @@ const verifyPhoneOtp = async (req, res) => {
             return res.send({
                 Message: "User not found!",
                 Status: false,
-                UserId: ""
+                UserId: "",
+                token:""
             })
         }
         const userOtp = await appOtp.findOne({ phone });
@@ -66,27 +67,32 @@ const verifyPhoneOtp = async (req, res) => {
             return res.send({
                 Message: "Incorrect number!",
                 Status: false,
-                UserId: ""
+                UserId: "",
+                token:""
             })
         }
         if (userOtp.otp === otp) {
             res.send({
                 Message: "OTP Verified!",
                 Stauts: true,
-                UserId: userData._id
+                UserId: userData._id,
+                token:""
             })
         } else {
             res.send({
                 Message: "Incorrect OTP",
                 Status: false,
-                UserId: ""
+                UserId: "",
+                token:""
             })
         }
     } catch (error) {
+        console.log("Error in verify otp: ",error);
         res.send({
             Message: "Something went wrong!",
             Status: false,
-            UserId: ""
+            UserId: "",
+            token:""
         })
     }
 }
