@@ -8,4 +8,4 @@ category:[{ type:String, is_called: Boolean, }],
 
 const panditTalk = mongoose.model('panditTalk', talkPanditSchema);
 
-module.exports = talkPanditSchema;
+module.exports = panditTalk;
