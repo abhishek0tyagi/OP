@@ -9,29 +9,29 @@ const register = async (req, res) => {
         const phone = req.params.phone;
         if (phone != "1234567890") {
             return res.send({
-                Message: "Incorrect testing number!",
-                Status: false
+                message: "Incorrect testing number!",
+                status: false
             })
         }
         const userData = await users.findOne({ phone });
         if (userData) {
             await appOtp.create({ phone, email: "", otp: "1234", description: "Login OTP!" });
             res.send({
-                Message: "OTP sent!",
-                Status: true
+                message: "OTP sent!",
+                status: true
             })
         } else {
             await users.create({ fullName: "", phone, email: "", dateofBirth: "", city: "", state: "" });
             await appOtp.create({ phone, email: "", otp: "1234", description: "Login OTP!" });
             res.send({
-                Message: "OTP sent!",
-                Status: true
+                message: "OTP sent!",
+                status: true
             });
         }
     } catch (error) {
         res.send({
-            Message: "Something went wrong!",
-            Status: false
+            message: "Something went wrong!",
+            status: false
         })
     }
     // let mobile = '917310042077';
@@ -56,42 +56,42 @@ const verifyPhoneOtp = async (req, res) => {
         const userData = await users.findOne({ phone });
         if (!userData) {
             return res.send({
-                Message: "User not found!",
-                Status: false,
-                UserId: "",
+                message: "User not found!",
+                status: false,
+                userId: "",
                 token:""
             })
         }
         const userOtp = await appOtp.findOne({ phone });
         if (!userOtp) {
             return res.send({
-                Message: "Incorrect number!",
-                Status: false,
-                UserId: "",
+                message: "Incorrect number!",
+                status: false,
+                userId: "",
                 token:""
             })
         }
         if (userOtp.otp === otp) {
             res.send({
-                Message: "OTP Verified!",
-                Status: true,
-                UserId: userData._id,
+                message: "OTP Verified!",
+                status: true,
+                userId: userData._id,
                 token:""
             })
         } else {
             res.send({
-                Message: "Incorrect OTP",
-                Status: false,
-                UserId: "",
+                message: "Incorrect OTP",
+                status: false,
+                userId: "",
                 token:""
             })
         }
     } catch (error) {
         console.log("Error in verify otp: ",error);
         res.send({
-            Message: "Something went wrong!",
-            Status: false,
-            UserId: "",
+            message: "Something went wrong!",
+            status: false,
+            userId: "",
             token:""
         })
     }
