@@ -74,7 +74,7 @@ const verifyPhoneOtp = async (req, res) => {
         if (userOtp.otp === otp) {
             res.send({
                 Message: "OTP Verified!",
-                Stauts: true,
+                Status: true,
                 UserId: userData._id,
                 token:""
             })
