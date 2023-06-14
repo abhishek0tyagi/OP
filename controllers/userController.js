@@ -137,7 +137,7 @@ const exceltoJson = async function(req,res)
     // var excelData=await fs.readFile('uploads/iplDataTeam.xlsx', 'utf8',async function(err, data){
     // var data1=excelData.split('.')
         // Display the file content
-   
+   try{
 setTimeout(() => {
     var path='uploads/'+req.file.originalname;
     console.log(path)
@@ -147,6 +147,10 @@ var result = excelToJson({
 res.send(result)
   }, "1000");
 }
-
+catch(error)
+{
+    res.send(error)
+}
+}
 
 module.exports = { register, verifyPhoneOtp, userCompeleteProfile, exceltoJson};
