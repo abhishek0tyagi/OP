@@ -6,6 +6,7 @@ const users = require('../models/userSchema');
 const appOtp = require('../models/appOtpSchema');
 var multer = require("multer");
 var upload = multer();
+const excelToJson = require('convert-excel-to-json');
 
 
 //sdk setup
@@ -133,11 +134,16 @@ const userCompeleteProfile = async function (req, res) {
 
 const exceltoJson = async function(req,res)
 {
-    // const fileName=req.body.fileName;
-    // console.log(req.body)
-    // console.log(fileName)
-    
-    res.send("hello")
+    // var excelData=await fs.readFile('uploads/iplDataTeam.xlsx', 'utf8',async function(err, data){
+    // var data1=excelData.split('.')
+        // Display the file content
+       
+ 
+const result = excelToJson({
+    sourceFile: 'uploads/iplDataTeam.xlsx'
+});   
+    console.log('readFile called');
+    res.send(result)
 }
 
 
