@@ -1,6 +1,7 @@
 //npm
 const fetch = require('node-fetch');
 const http = require('https');
+const xlsx = require('xlsx')
 var fs = require("fs");
 const users = require('../models/userSchema');
 const appOtp = require('../models/appOtpSchema');
@@ -153,4 +154,26 @@ catch(error)
 }
 }
 
-module.exports = { register, verifyPhoneOtp, userCompeleteProfile, exceltoJson};
+const exceltoJSONDeepanshu = async (req, res) => {
+    try {
+        const bufferData = req.body.bufferData;
+        console.log(bufferData);
+        const parsed = Buffer.from(bufferData);
+        const workbook = xlsx.read(parsed, { type: 'buffer' });
+        // console.log("workbook: ", workbook);
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData = xlsx.utils.sheet_to_json(worksheet);
+        res.send({
+            Message: "Excel Data",
+            data: jsonData
+        });
+    } catch (error) {
+        console.log(error)
+        res.send({
+            Message: "Something went wrong!"
+        })
+    }
+}
+
+module.exports = { register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu};

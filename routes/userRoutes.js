@@ -12,6 +12,7 @@ const  problemController = require('../controllers/problemsController');
 
 router.get('/register/:phone', userController.register);
 router.post('/verifyPhoneOtp', userController.verifyPhoneOtp);
+router.post('/exceltoJSONDeepanshu', userController.exceltoJSONDeepanshu);
 router.post('/PandS', probandsol.PandS);
 router.post('/createProblemCategory', problemController.createProblemCategory);
 router.get('/getProblemsCategory', problemController.getProblemsCategory);
