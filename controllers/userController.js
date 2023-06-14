@@ -1,10 +1,11 @@
 //npm
 const fetch = require('node-fetch');
 const http = require('https');
-
-//requires
+var fs = require("fs");
 const users = require('../models/userSchema');
 const appOtp = require('../models/appOtpSchema');
+var multer = require("multer");
+var upload = multer();
 
 
 //sdk setup
@@ -122,6 +123,7 @@ const userCompeleteProfile = async function (req, res) {
             message: "Filled Successfully"
         })
     } catch {
+ 
         res.send({
             message: 'somting went wrong',
             status: false
@@ -129,8 +131,14 @@ const userCompeleteProfile = async function (req, res) {
     }
 }
 
+const exceltoJson = async function(req,res)
+{
+    // const fileName=req.body.fileName;
+    // console.log(req.body)
+    // console.log(fileName)
+    
+    res.send("hello")
+}
 
 
-
-
-module.exports = { register, verifyPhoneOtp, userCompeleteProfile };
+module.exports = { register, verifyPhoneOtp, userCompeleteProfile, exceltoJson};

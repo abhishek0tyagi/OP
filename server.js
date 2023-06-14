@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+var multer = require("multer");
+var upload = multer();
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
@@ -16,7 +18,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true,
 }));
-app.use(formData.parse());
+// app.use(formData.parse());
+app.use(express.static('public'));
 
 mongoOptions = {
     useNewUrlParser: true,
