@@ -5,7 +5,6 @@ const schema = mongoose.Schema;
 const probandsolSchema = new schema({
     problemCategoryId: {
         type: String,
-        unique: true
     },
     problem: {
         type: String

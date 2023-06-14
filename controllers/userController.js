@@ -1,9 +1,13 @@
+//npm
 const fetch = require('node-fetch');
 const http = require('https');
 
+//requires
 const users = require('../models/userSchema');
 const appOtp = require('../models/appOtpSchema');
 
+
+//sdk setup
 const register = async (req, res) => {
     try {
         const phone = req.params.phone;
