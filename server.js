@@ -14,8 +14,9 @@ const formData = require('express-form-data');
 app.use(cors());
 app.use(express.static(`${process.cwd()}/images`));
 app.use('/images', express.static(`${process.cwd()}/images`));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb', }));
 app.use(bodyParser.urlencoded({
+    limit: '50mb',
     extended: true,
 }));
 // app.use(formData.parse());

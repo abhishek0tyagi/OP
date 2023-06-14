@@ -11,6 +11,11 @@ const excelToJson = require('convert-excel-to-json');
 
 
 //sdk setup
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3({
+    accessKeyId: 'AKIASNPTUT44GCQC7UMV',
+    secretAccessKey: '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',
+});
 const register = async (req, res) => {
     try {
         const phone = req.params.phone;
@@ -66,7 +71,7 @@ const verifyPhoneOtp = async (req, res) => {
                 message: "User not found!",
                 status: false,
                 userId: "",
-                token:""
+                token: ""
             })
         }
         const userOtp = await appOtp.findOne({ phone });
@@ -75,7 +80,7 @@ const verifyPhoneOtp = async (req, res) => {
                 message: "Incorrect number!",
                 status: false,
                 userId: "",
-                token:""
+                token: ""
             })
         }
         if (userOtp.otp === otp) {
@@ -83,23 +88,23 @@ const verifyPhoneOtp = async (req, res) => {
                 message: "OTP Verified!",
                 status: true,
                 userId: userData._id,
-                token:""
+                token: ""
             })
         } else {
             res.send({
                 message: "Incorrect OTP",
                 status: false,
                 userId: "",
-                token:""
+                token: ""
             })
         }
     } catch (error) {
-        console.log("Error in verify otp: ",error);
+        console.log("Error in verify otp: ", error);
         res.send({
             message: "Something went wrong!",
             status: false,
             userId: "",
-            token:""
+            token: ""
         })
     }
 }
@@ -125,7 +130,7 @@ const userCompeleteProfile = async function (req, res) {
             message: "Filled Successfully"
         })
     } catch {
- 
+
         res.send({
             message: 'somting went wrong',
             status: false
@@ -133,25 +138,23 @@ const userCompeleteProfile = async function (req, res) {
     }
 }
 
-const exceltoJson = async function(req,res)
-{
+const exceltoJson = async function (req, res) {
     // var excelData=await fs.readFile('uploads/iplDataTeam.xlsx', 'utf8',async function(err, data){
     // var data1=excelData.split('.')
-        // Display the file content
-   try{
-setTimeout(() => {
-    var path='uploads/'+req.file.originalname;
-    console.log(path)
-var result = excelToJson({
-    sourceFile:path
-});   
-res.send(result)
-  }, "1000");
-}
-catch(error)
-{
-    res.send(error)
-}
+    // Display the file content
+    try {
+        setTimeout(() => {
+            var path = 'uploads/' + req.file.originalname;
+            console.log(path)
+            var result = excelToJson({
+                sourceFile: path
+            });
+            res.send(result)
+        }, "1000");
+    }
+    catch (error) {
+        res.send(error)
+    }
 }
 
 const exceltoJSONDeepanshu = async (req, res) => {
@@ -176,4 +179,38 @@ const exceltoJSONDeepanshu = async (req, res) => {
     }
 }
 
-module.exports = { register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu};
+const uploadImage = async (req, res) => {
+    try {
+        const { imageId, imageBuffered } = req.body;
+        const buffered = Buffer.from(imageBuffered)
+        const uploadParams = {
+            Bucket: 'uploadimagepolicestation',
+            Key: `${imageId}.png`,
+            Body: buffered,
+        };
+        const uploadedPdf = await s3.upload(uploadParams).promise();
+        if(uploadedPdf.Location){
+            res.send({
+                message:"Image buffer!",
+                status:true,
+                path:uploadedPdf.Location
+            })
+        }else{
+            res.send({
+                message:"Error in uploading image!",
+                status:false,
+                path:""
+            })
+        }
+        
+    } catch (error) {
+        console.log(error)
+        res.send({
+            message: "Something went wrong!",
+            status: false,
+            path:""
+        })
+    }
+}
+
+module.exports = { register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu, uploadImage };
