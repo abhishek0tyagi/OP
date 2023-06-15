@@ -2,6 +2,7 @@ const express = require('express');
 var multer = require("multer");
 const upload = require('../middleware/middle');
 const horoScope = require('../controllers/horoScope')
+const {errorHandler} =require('../utils')
 
 const router = express.Router();
 // const { errorHandler } = require('../utils/common');
@@ -22,6 +23,6 @@ router.get('/getProblemsCategory', problemController.getProblemsCategory);
 router.get('/charts',horoScope.charts)  //get male and female match making score
 
 router.get('/matchmakingScore',horoScope.matchmakingScore)  //get male and female match making score
-router.post('/exceltoJson',upload.single('fileName'),userController.exceltoJson)
+router.post('/exceltoJson',upload.single('fileName'),errorHandler(userController.exceltoJson))
 router.get('/getPoliceData',userController.getPoliceData)
 module.exports = router;
