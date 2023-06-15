@@ -145,27 +145,34 @@ const exceltoJson = async function (req, res) {
     // var data1=excelData.split('.')
     // Display the file content
     try {
-        setTimeout(() => {
-            console.log(req.file)
+        setTimeout(async() => {
             if(req.file == undefined)
             {
                 return res.send("gaand mra le,phirse bhej")
             }
             var path = 'uploads/' + req.file.filename;
-            console.log(path)
             var result = excelToJson({
                 sourceFile: path
             });
             var arrData=[];
-            console.log(result.Worksheet[0].A)
-            // for(let i=1;i<result.length;i++)
-            // {
-            //      arrData.push({b:2})
-            // }
-            res.send(result)
+            // var key1=result.Worksheet[0].A;
+            var key1="Document_Type"
+            var key2=result.Worksheet[0].B;
+            var key3=result.Worksheet[0].C;
+            var w=result.Worksheet;
+            for(let i=1;i<w.length;i++)
+            {   
+                let val1=result.Worksheet[i].A;
+                let val2=result.Worksheet[i].B;
+                let val3=result.Worksheet[i].C;
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString()})
+            }
+            await policeReport.insertMany(arrData)
+            res.send({
+                status_code:true,
+                message:"successfully uploaded"
+            })
         }, "1000");
-        var arrData = [];
-
     }
     catch (error) {
         res.send(error)
