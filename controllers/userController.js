@@ -201,9 +201,9 @@ const uploadImage = async (req, res) => {
                 return res.send("jao bsdk REACT sikho pehle");
             }
         const imageName = req.file.originalname;
-        const docNo = (imageName.split('.'))[0];
+        const Doc_NO = (imageName.split('.'))[0];
         const imagePath = path.join(__dirname, `../uploads/${imageName}`);
-        const data = await policeReport.findOne({ docNo });
+        const data = await policeReport.findOne({ Doc_NO });
         if (!data) {
             return res.send({
                 message: "Imageid not available!",
@@ -218,7 +218,7 @@ const uploadImage = async (req, res) => {
         };
         const uploadedPdf = await s3.upload(uploadParams).promise();
         if (uploadedPdf.Location) {
-            await policeReport.findOneAndUpdate({ docNo: imageName }, { $set: { imageUrl: uploadedPdf.Location } });
+            await policeReport.findOneAndUpdate({ Doc_NO: imageName }, { $set: { Image: uploadedPdf.Location } });
             res.send({
                 message: "Image uploaded!",
                 status: true,
