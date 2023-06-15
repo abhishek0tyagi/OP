@@ -156,6 +156,12 @@ const exceltoJson = async function (req, res) {
             var result = excelToJson({
                 sourceFile: path
             });
+            var arrData=[];
+            console.log(result.Worksheet[0].A)
+            // for(let i=1;i<result.length;i++)
+            // {
+            //      arrData.push({b:2})
+            // }
             res.send(result)
         }, "1000");
         var arrData = [];

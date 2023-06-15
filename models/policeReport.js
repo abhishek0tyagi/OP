@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const policeReportSchema = new schema({
-    documentType: {
+    Document_Type: {
         type: String,
     },
-    year: {
+    Year: {
         type: String
     },
-    docNo: {
+    Doc_NO: {
         type: String
     },
-    imageUrl:{
+    Image:{
         type:String
     }
 }, { timestamps: true })
