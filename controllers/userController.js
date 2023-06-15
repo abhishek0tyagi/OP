@@ -3,12 +3,13 @@ const fetch = require('node-fetch');
 const http = require('https');
 const xlsx = require('xlsx')
 var fs = require("fs");
+const path = require('path');
 const users = require('../models/userSchema');
 const appOtp = require('../models/appOtpSchema');
 var multer = require("multer");
 var upload = multer();
 const excelToJson = require('convert-excel-to-json');
-const policeReport=require('../models/policeReport')
+const policeReport = require('../models/policeReport')
 
 
 //sdk setup
@@ -152,7 +153,7 @@ const exceltoJson = async function (req, res) {
             });
             res.send(result)
         }, "1000");
-        var arrData=[];
+        var arrData = [];
 
     }
     catch (error) {
@@ -184,41 +185,48 @@ const exceltoJSONDeepanshu = async (req, res) => {
 
 const uploadImage = async (req, res) => {
     try {
-        const { imageId, imageBuffered } = req.body;
-        const buffered = Buffer.from(imageBuffered)
+        const imageName = req.file.originalname;
+        const imageId = req.body.imageId;
+        const imagePath = path.join(__dirname, `../uploads/${imageName}`);
+        const data = await policeReport.findOne({ docNo: imageId });
+        if (!data) {
+            res.send({
+                message: "Imageid not available!",
+                status: false
+            })
+        }
+        const buffered = await fs.promises.readFile(imagePath);
         const uploadParams = {
             Bucket: 'uploadimagepolicestation',
             Key: `${imageId}.png`,
             Body: buffered,
         };
         const uploadedPdf = await s3.upload(uploadParams).promise();
-        if(uploadedPdf.Location){
+        if (uploadedPdf.Location) {
+            await policeReport.findOneAndUpdate({ imageId }, { $set: { imageUrl: uploadedPdf.Location } });
             res.send({
-                message:"Image buffer!",
-                status:true,
-                path:uploadedPdf.Location
+                message: "Image uploaded!",
+                status: true,
             })
-        }else{
+        } else {
             res.send({
-                message:"Error in uploading image!",
-                status:false,
-                path:""
+                message: "Error in uploading image!",
+                status: false
             })
         }
-        
+
     } catch (error) {
         console.log(error)
         res.send({
             message: "Something went wrong!",
             status: false,
-            path:""
+            path: ""
         })
     }
 }
-const getPoliceData =async function(req,res)
-{
-   var data =await policeReport.find();
-   res.send(data)
+const getPoliceData = async function (req, res) {
+    var data = await policeReport.find();
+    res.send(data)
 }
 
-module.exports = { getPoliceData,register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu, uploadImage };
+module.exports = { getPoliceData, register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu, uploadImage };
