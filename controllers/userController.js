@@ -216,9 +216,9 @@ const uploadImage = async (req, res) => {
             Key: `${imageName}`,
             Body: buffered,
         };
-        const uploadedPdf = await s3.upload(uploadParams).promise();
-        if (uploadedPdf.Location) {
-            await policeReport.findOneAndUpdate({ Doc_NO: imageName }, { $set: { Image: uploadedPdf.Location } });
+        const uploadedImage = await s3.upload(uploadParams).promise();
+        if (uploadedImage.Location) {
+            await policeReport.findOneAndUpdate({ Doc_NO }, { $set: { Image: uploadedImage.Location } });
             res.send({
                 message: "Image uploaded!",
                 status: true,
