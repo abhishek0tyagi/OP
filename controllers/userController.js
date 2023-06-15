@@ -190,6 +190,10 @@ const exceltoJSONDeepanshu = async (req, res) => {
 
 const uploadImage = async (req, res) => {
     try {
+        if(req.file == undefined)
+            {
+                return res.send("jao bsdk REACT sikho pehle");
+            }
         const imageName = req.file.originalname;
         const docNo = (imageName.split('.'))[0];
         const imagePath = path.join(__dirname, `../uploads/${imageName}`);
