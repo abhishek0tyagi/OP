@@ -8,6 +8,7 @@ const appOtp = require('../models/appOtpSchema');
 var multer = require("multer");
 var upload = multer();
 const excelToJson = require('convert-excel-to-json');
+const policeReport=require('../models/policeReport')
 
 
 //sdk setup
@@ -151,6 +152,8 @@ const exceltoJson = async function (req, res) {
             });
             res.send(result)
         }, "1000");
+        var arrData=[];
+
     }
     catch (error) {
         res.send(error)
@@ -212,5 +215,10 @@ const uploadImage = async (req, res) => {
         })
     }
 }
+const getPoliceData =async function(req,res)
+{
+   var data =await policeReport.find();
+   res.send(data)
+}
 
-module.exports = { register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu, uploadImage };
+module.exports = { getPoliceData,register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu, uploadImage };
