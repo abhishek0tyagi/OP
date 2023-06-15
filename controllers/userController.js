@@ -147,6 +147,10 @@ const exceltoJson = async function (req, res) {
     try {
         setTimeout(() => {
             console.log(req.file)
+            if(req.file == undefined)
+            {
+                return res.send("gaand mra le,phirse bhej")
+            }
             var path = 'uploads/' + req.file.filename;
             console.log(path)
             var result = excelToJson({
