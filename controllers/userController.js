@@ -186,11 +186,11 @@ const exceltoJSONDeepanshu = async (req, res) => {
 const uploadImage = async (req, res) => {
     try {
         const imageName = req.file.originalname;
-        const imageId = req.body.imageId;
+        const docNo = (imageName.split('.'))[0];
         const imagePath = path.join(__dirname, `../uploads/${imageName}`);
-        const data = await policeReport.findOne({ docNo: imageId });
+        const data = await policeReport.findOne({ docNo });
         if (!data) {
-            res.send({
+            return res.send({
                 message: "Imageid not available!",
                 status: false
             })
@@ -198,12 +198,12 @@ const uploadImage = async (req, res) => {
         const buffered = await fs.promises.readFile(imagePath);
         const uploadParams = {
             Bucket: 'uploadimagepolicestation',
-            Key: `${imageId}.png`,
+            Key: `${imageName}`,
             Body: buffered,
         };
         const uploadedPdf = await s3.upload(uploadParams).promise();
         if (uploadedPdf.Location) {
-            await policeReport.findOneAndUpdate({ imageId }, { $set: { imageUrl: uploadedPdf.Location } });
+            await policeReport.findOneAndUpdate({ docNo: imageName }, { $set: { imageUrl: uploadedPdf.Location } });
             res.send({
                 message: "Image uploaded!",
                 status: true,
