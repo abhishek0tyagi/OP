@@ -156,9 +156,9 @@ const exceltoJson = async function (req, res) {
             });
             var arrData=[];
             // var key1=result.Worksheet[0].A;
-            var key1="Document_Type"
-            var key2=result.Worksheet[0].B;
-            var key3=result.Worksheet[0].C;
+            // var key1="Document_Type"
+            // var key2=result.Worksheet[0].B;
+            // var key3=result.Worksheet[0].C;
             var w=result.Worksheet;
             for(let i=1;i<w.length;i++)
             {   
