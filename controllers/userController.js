@@ -165,13 +165,14 @@ const exceltoJson = async function (req, res) {
             {
               return res.send("file not compatable")
             }
-            var w=result.Worksheet; 
+            // var w=result.Worksheet; 
+            var w=result.Sheet1;
             console.log(w)
             for(let i=1;i<w.length;i++)
             {   
-                let val1=result.Worksheet[i].A;
-                let val2=result.Worksheet[i].B;
-                let val3=result.Worksheet[i].C;
+                let val1=result.Sheet1[i].A;
+                let val2=result.Sheet1[i].B;
+                let val3=result.Sheet1[i].C;
                 arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString()})
             }
             await policeReport.insertMany(arrData)
