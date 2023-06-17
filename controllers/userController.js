@@ -161,10 +161,23 @@ const exceltoJson = async function (req, res) {
             // var key3=result.Worksheet[0].C;
             console.log(result)
             
-            // if(result.Worksheet==undefined)
-            // {
-            //   return res.send("file not compatable")
-            // }
+            if(result.Worksheet!=undefined)
+            {
+                var w=result.Worksheet; 
+            console.log(w)
+            for(let i=1;i<w.length;i++)
+            {   
+                let val1=result.Worksheet[i].A;
+                let val2=result.Worksheet[i].B;
+                let val3=result.Worksheet[i].C;
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString()})
+            }
+            await policeReport.insertMany(arrData)
+            return res.send({
+                status_code:true,
+                message:"successfully uploaded"
+            })
+            }
             // var w=result.Worksheet; 
             var w=result.Sheet1;
             console.log(w)
