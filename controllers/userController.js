@@ -159,7 +159,14 @@ const exceltoJson = async function (req, res) {
             // var key1="Document_Type"
             // var key2=result.Worksheet[0].B;
             // var key3=result.Worksheet[0].C;
-            var w=result.Worksheet;
+            console.log(result)
+            
+            if(result.Worksheet==undefined)
+            {
+              return res.send("file not compatable")
+            }
+            var w=result.Worksheet; 
+            console.log(w)
             for(let i=1;i<w.length;i++)
             {   
                 let val1=result.Worksheet[i].A;
