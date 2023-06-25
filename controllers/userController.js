@@ -224,13 +224,11 @@ const exceltoJSONDeepanshu = async (req, res) => {
 
 const uploadImage = async (req, res) => {
     try {
-        if(req.file == undefined)
-            {
-                return res.send("jao bsdk REACT sikho pehle");
-            }
-        const imageName = req.file.originalname;
-        const Doc_NO = (imageName.split('.'))[0];
-        const imagePath = path.join(__dirname, `../uploads/${imageName}`);
+        const file = req.file;
+        if (!file) {
+            return res.send({ message: "Somehing Went Wrong!", staus: false })
+        }
+        const Doc_NO = (file.originalname.split('.'))[0];
         const data = await policeReport.findOne({ Doc_NO });
         if (!data) {
             return res.send({
@@ -238,11 +236,12 @@ const uploadImage = async (req, res) => {
                 status: false
             })
         }
-        const buffered = await fs.promises.readFile(imagePath);
+        const imagePath = path.join(__dirname, '../constants/images');
+        fs.promises.writeFile(`${imagePath}/${file.originalname}`, file.buffer);
         const uploadParams = {
             Bucket: 'uploadimagepolicestation',
-            Key: `${imageName}`,
-            Body: buffered,
+            Key: `${file.originalname}`,
+            Body: file.buffer,
         };
         const uploadedImage = await s3.upload(uploadParams).promise();
         if (uploadedImage.Location) {
@@ -267,6 +266,7 @@ const uploadImage = async (req, res) => {
         })
     }
 }
+
 const getPoliceData = async function (req, res) {
     var data = await policeReport.find();
     res.send(data)
