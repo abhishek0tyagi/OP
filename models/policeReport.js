@@ -12,7 +12,7 @@ const policeReportSchema = new schema({
     Doc_NO: {
         type: String
     },
-    Image:{
+    Unique_Code:{
         type:String
     }
 }, { timestamps: true })
