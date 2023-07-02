@@ -225,11 +225,14 @@ const exceltoJSONDeepanshu = async (req, res) => {
 const uploadImage = async (req, res) => {
     try {
         const file = req.file;
+        console.log(file);
         if (!file) {
             return res.send({ message: "Somehing Went Wrong!", staus: false })
         }
         const Unique_Code = (file.originalname.split('.'))[0];
+        console.log(Unique_Code, typeod(Unique_Code))
         const data = await policeReport.findOne({ Unique_Code });
+        console.log(data);
         if (!data) {
             return res.send({
                 message: "Imageid not available!",
