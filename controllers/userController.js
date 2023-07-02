@@ -227,7 +227,7 @@ const uploadImage = async (req, res) => {
     try {
         const file = req.file;
         if (!file) {
-            return res.send({ message: "Somehing Went Wrong!", staus: false })
+            return res.send({ message: "Some Resource not found!", staus: false })
         }
         const Unique_Code = (file.originalname.split('.'))[0];
         // console.log(Unique_Code, typeid(Unique_Code))
@@ -235,12 +235,12 @@ const uploadImage = async (req, res) => {
         console.log(data);
         if (!data) {
             return res.send({
-                message: "Imageid not available!",
+                message: "Id not available!",
                 status: false
             })
         }
-        const imagePath = path.join(__dirname, '../constants/images');
-        fs.promises.writeFile(`${imagePath}/${file.originalname}`, file.buffer);
+        // const imagePath = path.join(__dirname, '../constants/images');
+        // fs.promises.writeFile(`${imagePath}/${file.originalname}`, file.buffer);
         const uploadParams = {
             Bucket: 'uploadimagepolicestation',
             Key: `${file.originalname}`,
@@ -250,12 +250,12 @@ const uploadImage = async (req, res) => {
         if (uploadedImage.Location) {
             await policeReport.findOneAndUpdate({ Unique_Code }, { $set: { PdfUrl: uploadedImage.Location } });
             res.send({
-                message: "Image uploaded!",
+                message: "Pdf uploaded!",
                 status: true,
             })
         } else {
             res.send({
-                message: "Error in uploading image!",
+                message: "Error in uploading pdf!",
                 status: false
             })
         }
