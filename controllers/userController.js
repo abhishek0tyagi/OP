@@ -170,8 +170,7 @@ const exceltoJson = async function (req, res) {
                 let val1=result.Worksheet[i].A;
                 let val2=result.Worksheet[i].B;
                 let val3=result.Worksheet[i].C;
-                let val4=result.Worksheet[i].D;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_Code:val4.toString()})
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString()})
             }
             await policeReport.insertMany(arrData)
             return res.send({
@@ -187,8 +186,7 @@ const exceltoJson = async function (req, res) {
                 let val1=result.Sheet1[i].A;
                 let val2=result.Sheet1[i].B;
                 let val3=result.Sheet1[i].C;
-                let val4=result.Sheet1[i].D;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_code:val4.toString()})
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString()})
             }
             await policeReport.insertMany(arrData)
             res.send({
@@ -230,8 +228,8 @@ const uploadImage = async (req, res) => {
         if (!file) {
             return res.send({ message: "Somehing Went Wrong!", staus: false })
         }
-        const Doc_NO = (file.originalname.split('.'))[0];
-        const data = await policeReport.findOne({ Doc_NO });
+        const Unique_Code = (file.originalname.split('.'))[0];
+        const data = await policeReport.findOne({ Unique_Code });
         if (!data) {
             return res.send({
                 message: "Imageid not available!",
@@ -247,7 +245,7 @@ const uploadImage = async (req, res) => {
         };
         const uploadedImage = await s3.upload(uploadParams).promise();
         if (uploadedImage.Location) {
-            await policeReport.findOneAndUpdate({ Doc_NO }, { $set: { Image: uploadedImage.Location } });
+            await policeReport.findOneAndUpdate({ Unique_Code }, { $set: { PdfUrl: uploadedImage.Location } });
             res.send({
                 message: "Image uploaded!",
                 status: true,
