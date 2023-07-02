@@ -170,7 +170,8 @@ const exceltoJson = async function (req, res) {
                 let val1=result.Worksheet[i].A;
                 let val2=result.Worksheet[i].B;
                 let val3=result.Worksheet[i].C;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString()})
+                let val4 = result.Worksheet[i].D;
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(), Unique_Code:val4.toString(), PdfUrl:""});
             }
             await policeReport.insertMany(arrData)
             return res.send({
