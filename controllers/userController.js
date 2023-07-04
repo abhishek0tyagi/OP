@@ -174,7 +174,7 @@ const exceltoJson = async function (req, res) {
                 let val2=result.Worksheet[i].B;
                 let val3=result.Worksheet[i].C;
                 let val4=result.Worksheet[i].D;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_Code:val4.toString(),Path:path.toString()})
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_Code:val4.toString()})
             }
             await policeReport.insertMany(arrData)
             return res.send({
@@ -192,7 +192,7 @@ const exceltoJson = async function (req, res) {
                 let val2=result.Sheet1[i].B;
                 let val3=result.Sheet1[i].C;
                 let val4=result.Sheet1[i].D;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_code:val4.toString(),Path:path.toString()})
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_code:val4.toString()})
             }
             await policeReport.insertMany(arrData)
             res.send({
@@ -232,18 +232,20 @@ const uploadImage = async (req, res) => {
     try {
         const file = req.file;
         if (!file) {
-            return res.send({ message: "Somehing Went Wrong!", staus: false })
+            return res.send({ message: "Some Resource not found!", staus: false })
         }
-        const Doc_NO = (file.originalname.split('.'))[0];
-        const data = await policeReport.findOne({ Doc_NO });
+        const Unique_Code = (file.originalname.split('.'))[0];
+        // console.log(Unique_Code, typeid(Unique_Code))
+        const data = await policeReport.findOne({ Unique_Code });
+        console.log(data);
         if (!data) {
             return res.send({
-                message: "Imageid not available!",
+                message: "Id not available!",
                 status: false
             })
         }
-        const imagePath = path.join(__dirname, '../constants/images');
-        fs.promises.writeFile(`${imagePath}/${file.originalname}`, file.buffer);
+        // const imagePath = path.join(__dirname, '../constants/images');
+        // fs.promises.writeFile(`${imagePath}/${file.originalname}`, file.buffer);
         const uploadParams = {
             Bucket: 'uploadimagepolicestation',
             Key: `${file.originalname}`,
@@ -251,14 +253,14 @@ const uploadImage = async (req, res) => {
         };
         const uploadedImage = await s3.upload(uploadParams).promise();
         if (uploadedImage.Location) {
-            await policeReport.findOneAndUpdate({ Doc_NO }, { $set: { Image: uploadedImage.Location } });
+            await policeReport.findOneAndUpdate({ Unique_Code }, { $set: { PdfUrl: uploadedImage.Location } });
             res.send({
-                message: "Image uploaded!",
+                message: "Pdf uploaded!",
                 status: true,
             })
         } else {
             res.send({
-                message: "Error in uploading image!",
+                message: "Error in uploading pdf!",
                 status: false
             })
         }
