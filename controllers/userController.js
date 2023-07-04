@@ -148,7 +148,7 @@ const exceltoJson = async function (req, res) {
         setTimeout(async() => {
             if(req.file == undefined)
             {
-                return res.send("gaand mra le,phirse bhej")
+                return res.send("Something went wrong")
             }
             var path = 'uploads/' + req.file.filename;
             var result = excelToJson({
@@ -165,13 +165,16 @@ const exceltoJson = async function (req, res) {
             {
                 var w=result.Worksheet; 
             console.log(w)
+            let path =result.Worksheet[i].E;
+
             for(let i=1;i<w.length;i++)
             {   
+               
                 let val1=result.Worksheet[i].A;
                 let val2=result.Worksheet[i].B;
                 let val3=result.Worksheet[i].C;
                 let val4=result.Worksheet[i].D;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_Code:val4.toString()})
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_Code:val4.toString(),Path:path.toString()})
             }
             await policeReport.insertMany(arrData)
             return res.send({
@@ -181,6 +184,7 @@ const exceltoJson = async function (req, res) {
             }
             // var w=result.Worksheet; 
             var w=result.Sheet1;
+            let path =result.Worksheet[i].E;
             console.log(w)
             for(let i=1;i<w.length;i++)
             {   
@@ -188,7 +192,7 @@ const exceltoJson = async function (req, res) {
                 let val2=result.Sheet1[i].B;
                 let val3=result.Sheet1[i].C;
                 let val4=result.Sheet1[i].D;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_code:val4.toString()})
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_code:val4.toString(),Path:path.toString()})
             }
             await policeReport.insertMany(arrData)
             res.send({

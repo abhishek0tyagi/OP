@@ -17,6 +17,9 @@ const policeReportSchema = new schema({
     },
     Image:{
         type:String
+    },
+    Path:{
+        type:String
     }
 }, { timestamps: true })
 
