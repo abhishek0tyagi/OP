@@ -165,7 +165,7 @@ const exceltoJson = async function (req, res) {
             {
                 var w=result.Worksheet; 
             console.log(w)
-            let filepath =result.Worksheet[i].E;
+            let filepath =result.Worksheet[1].E;
 
             for(let i=1;i<w.length;i++)
             {   
@@ -184,7 +184,7 @@ const exceltoJson = async function (req, res) {
             }
             // var w=result.Worksheet; 
             var w=result.Sheet1;
-            let filepath =result.Worksheet[i].E;
+            let filepath =result.Worksheet[1].E;
             console.log(w)
             for(let i=1;i<w.length;i++)
             {   
