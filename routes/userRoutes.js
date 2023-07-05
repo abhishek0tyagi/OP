@@ -9,6 +9,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const probandsol = require('../controllers/probandsol');
 const problemController = require('../controllers/problemsController');
+const panditListController = require('../controllers/panditListController')
 
 router.get('/register/:phone', userController.register);
 router.post('/verifyPhoneOtp', userController.verifyPhoneOtp);
@@ -25,5 +26,6 @@ router.get('/matchmakingScore', horoScope.matchmakingScore)  //get male and fema
 router.post('/exceltoJson', upload.single('fileName'), errorHandler(userController.exceltoJson))
 router.get('/getPoliceData', userController.getPoliceData);
 router.get('/dashboardCount', userController.dashboardCount)
-
+router.post('/registerPandit', panditListController.registerPandit)
+router.get('/fetchPanditList', panditListController.fetchPanditList)
 module.exports = router;

@@ -26,3 +26,10 @@ const registerPandit = async function(req, res){
 
     }
 }
+
+
+const fetchPanditList = async function (req, res){
+    const PanditData = createProfile.find({_id:id})
+}
+
+module.exports ={registerPandit,fetchPanditList}

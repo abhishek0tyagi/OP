@@ -8,7 +8,7 @@ const createPanditProfile = new schema({
         require:true
     },
     lastName:{
-        Type:String,
+        type:String,
         require:true
     },
     city:{
