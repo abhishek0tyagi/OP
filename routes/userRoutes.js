@@ -23,5 +23,7 @@ router.get('/charts', horoScope.charts)  //get male and female match making scor
 
 router.get('/matchmakingScore', horoScope.matchmakingScore)  //get male and female match making score
 router.post('/exceltoJson', upload.single('fileName'), errorHandler(userController.exceltoJson))
-router.get('/getPoliceData', userController.getPoliceData)
+router.get('/getPoliceData', userController.getPoliceData);
+router.get('/dashboardCount', userController.dashboardCount)
+
 module.exports = router;
