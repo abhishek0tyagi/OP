@@ -276,8 +276,8 @@ const getPoliceData = async function (req, res) {
 }
 
 const dashboardCount = async function (req, res) {
-    var data = await policeReport.find();
-    res.send({count:data.length})
+    var data = await policeReport.find().count();
+    res.send({count:data})
 }
 
 module.exports = { dashboardCount, getPoliceData, register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu, uploadImage };
