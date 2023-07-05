@@ -148,7 +148,7 @@ const exceltoJson = async function (req, res) {
         setTimeout(async() => {
             if(req.file == undefined)
             {
-                return res.send("Something went wrong")
+                return res.send("gaand mra le,phirse bhej")
             }
             var path = 'uploads/' + req.file.filename;
             var result = excelToJson({
@@ -159,23 +159,19 @@ const exceltoJson = async function (req, res) {
             // var key1="Document_Type"
             // var key2=result.Worksheet[0].B;
             // var key3=result.Worksheet[0].C;
-            console.log(result);
+            console.log(result)
+            
             if(result.Worksheet!=undefined)
             {
                 var w=result.Worksheet; 
             console.log(w)
-            let filepath =result.Worksheet[1].E;
-            let netPath = filepath.split("\\").join("/");
-
-
             for(let i=1;i<w.length;i++)
             {   
-               
                 let val1=result.Worksheet[i].A;
                 let val2=result.Worksheet[i].B;
                 let val3=result.Worksheet[i].C;
-                let val4=result.Worksheet[i].D;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_Code:val4.toString(),Path:netPath.toString()})
+                let val4 = result.Worksheet[i].D;
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(), Unique_Code:val4.toString(), PdfUrl:""});
             }
             await policeReport.insertMany(arrData)
             return res.send({
@@ -185,17 +181,13 @@ const exceltoJson = async function (req, res) {
             }
             // var w=result.Worksheet; 
             var w=result.Sheet1;
-            let filepath =result.Worksheet[1].E;
-            let netPath = filepath.split("\\").join("/");
-            
             console.log(w)
             for(let i=1;i<w.length;i++)
             {   
                 let val1=result.Sheet1[i].A;
                 let val2=result.Sheet1[i].B;
                 let val3=result.Sheet1[i].C;
-                let val4=result.Sheet1[i].D;
-                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString(),Unique_code:val4.toString(),Path:netPath.toString()})
+                arrData.push({Document_Type:val1.toString(),Year:val2.toString(),Doc_NO:val3.toString()})
             }
             await policeReport.insertMany(arrData)
             res.send({
@@ -280,7 +272,7 @@ const uploadImage = async (req, res) => {
 
 const getPoliceData = async function (req, res) {
     var data = await policeReport.find();
-    res.send(data)
+    res.send({count:data.length,data})
 }
 
 module.exports = { getPoliceData, register, verifyPhoneOtp, userCompeleteProfile, exceltoJson, exceltoJSONDeepanshu, uploadImage };
