@@ -11,7 +11,7 @@ const probandsol = require('../controllers/probandsol');
 const problemController = require('../controllers/problemsController');
 const panditListController = require('../controllers/panditListController')
 
-router.get('/register/:phone', userController.register);
+router.post('/register', userController.register);
 router.post('/verifyPhoneOtp', userController.verifyPhoneOtp);
 router.post('/exceltoJSONDeepanshu', userController.exceltoJSONDeepanshu);
 router.post('/uploadImage', memoryupload.single('fileName'), userController.uploadImage);

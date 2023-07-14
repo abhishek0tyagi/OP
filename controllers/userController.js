@@ -20,7 +20,7 @@ const s3 = new AWS.S3({
 });
 const register = async (req, res) => {
     try {
-        const phone = req.params.phone;
+        const {phone} = req.body
         if (phone != "1234567890") {
             return res.send({
                 message: "Incorrect testing number!",
