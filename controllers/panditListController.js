@@ -29,7 +29,26 @@ const registerPandit = async function(req, res){
 
 
 const fetchPanditList = async function (req, res){
-    const PanditData = createProfile.find({_id:id})
+    try{
+        const PanditData = createProfile.find({_id:id})
+        if(PanditData != null || PanditData != ""){
+            res.send({
+                message:'getting padit data successfully',
+                status_code: true
+            })
+        }else{
+            res.send({
+                message:'there is no padit',
+                status_code:false
+            })
+        }
+    }catch{
+        res.send({
+            message: error,
+            status_code:false
+        })
+    }
+   
 }
 
 module.exports ={registerPandit,fetchPanditList}

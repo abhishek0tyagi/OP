@@ -21,7 +21,8 @@ const createPanditProfile = new schema({
         type:String
     },
     isAvailbale:{
-        type:Boolean
+        type:Boolean,
+        default:true
     },
     experence:{
         type:String,
@@ -38,8 +39,12 @@ const createPanditProfile = new schema({
         type:String
     },
     availbaleHours:{
-        startTime:String,
-        endTime:String
+        startTime:{
+            type:String
+        },
+        endTime:{
+            type:String
+        }
     },
 
 },{ timestamps: true })
